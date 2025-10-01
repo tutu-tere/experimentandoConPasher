@@ -1,9 +1,13 @@
 const config = {
     title: "Hola Phaser",
-    type: Phaser.AUTO,
-    parent: "contenedor",
-    width: 800,
-    height: 600,
+    scale: {
+        mode: Phaser.Scale.FIT, // Le estamos diciendo que se ajuste automaticamente al alto y ancho del lienzo manteniendo su aspecto.
+        autoCenter: Phaser.Scale.CENTER_BOTH, // Centramos el lienzo en la pantalla.
+        type: Phaser.AUTO,
+        parent: "contenedor",
+        width: 800,
+        height: 600,
+    },
     scene: {
         preload,
         create,
@@ -21,11 +25,13 @@ const config = {
  var game = new Phaser.Game(config);
 
 function preload (){
-    this.load.setBaseURL('https://labs.phaser.io');
+    
 
-    this.load.image('fondo', 'assets/skies/nebula.jpg');
-    this.load.image('planeta', 'assets/sprites/phaser1.png');
-    this.load.image('particula', 'assets/particles/yellow.png');
+    this.load.image('fondo', 'https://labs.phaser.io/assets/skies/nebula.jpg');
+    this.load.image('planeta', 'https://labs.phaser.io/assets/sprites/phaser1.png');
+    this.load.image('particula', 'https://labs.phaser.io/assets/particles/yellow.png');
+    this.load.image('raqueta', './Assets/raqueta.png');
+    this.load.audio('sonido', './Assets/audio.mp3');
 
 };
 function create (){
@@ -39,6 +45,8 @@ const particulas = this.add.particles(0, 0, 'particula', {
         follow: mundo // ← sigue al planeta
     });
 
+    raqueta = this.physics.add.image(300, 400, 'raqueta');
+    raqueta.setAlpha(0.5);
 
 
 console.log(mundo);
@@ -49,6 +57,19 @@ mundo.setFlipX(true);
 mundo.setCollideWorldBounds(true);
 mundo.setBounce(0.9);
 mundo.setVelocity(500, 500);
+const Texto= this.add.text(300,550,"Hola mundo",{
+    color: 'green',
+    fontSize: 20,
+    backgroundColor: 'white',
+    padding: {
+        top:15,
+        bottom:15,
+        left:15,
+        right:15,
+    },
+    align: 'center',
+})
+Texto.setAlpha(0.2);
 
 };
 function update(time, delta){
